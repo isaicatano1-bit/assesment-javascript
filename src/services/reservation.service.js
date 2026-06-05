@@ -5,3 +5,7 @@ export const getReservations = () =>
 
 export const createReservation = (data) =>
   http.post("/reservations", data);
+
+export const deleteReservation = async (id) => {
+  return await http.delete(`/reservations/${id}`);
+};

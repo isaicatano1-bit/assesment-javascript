@@ -1,292 +1,87 @@
-# Guía para el README del Proyecto
+# SPA Reservation Management System
 
-> **Importante:** Este documento está escrito en español como guía para los coders. El archivo `README.md` que entreguen en su proyecto debe estar redactado completamente en inglés.
-
----
-
-# Project Canvas
-
-## Nombre sugerido del proyecto
-
-**Workspace Reservation System SPA**
-
-## Descripción general
-
-Este proyecto consiste en desarrollar una Single Page Application (SPA) utilizando JavaScript, Vite, TailwindCSS y JSON Server.
-
-La aplicación simula un sistema de reservas de espacios de trabajo donde los usuarios pueden autenticarse, navegar por rutas protegidas y gestionar información consumida desde una API simulada.
-
-El objetivo principal es evaluar conocimientos relacionados con:
-
-- Arquitectura SPA
-- Autenticación
-- Manejo de roles
-- Protección de rutas
-- Persistencia de sesión
-- Consumo de APIs
-- Manipulación del DOM
-- Modularización del código
-- Buenas prácticas de desarrollo
+A dynamic Single Page Application (SPA) designed to manage workplace and space reservations efficiently. The system features a role-based interface separating standard Users from Administrators, complete with live data binding and persistent storage.
 
 ---
 
-## Contexto del problema
+##  Getting Started
 
-Una empresa dispone de diferentes espacios de trabajo compartidos:
+Follow these simple steps to set up the environment and launch the project locally.
 
-- Salas de reuniones
-- Oficinas privadas
-- Espacios de coworking
-- Auditorios
-
-Para evitar conflictos de horarios y mejorar la organización interna, se requiere una plataforma que permita administrar reservas de dichos espacios.
-
-La aplicación debe contemplar dos roles:
-
-### Administrador (admin)
-
-Puede:
-
-- Ver todas las reservas
-- Crear reservas
-- Editar reservas
-- Eliminar reservas
-- Aprobar o rechazar reservas
-- Gestionar espacios de trabajo
-- Acceder a módulos administrativos
-
-### Usuario (user)
-
-Puede:
-
-- Consultar espacios disponibles
-- Crear reservas
-- Ver únicamente sus reservas
-- Modificar reservas pendientes
-- Cancelar sus propias reservas
-
----
-
-## Tecnologías utilizadas
-
-- JavaScript ES6+
-- Vite
-- TailwindCSS
-- JSON Server
-- Concurrently
-- HTML5
-- CSS3
-
----
-
-## Estructura base entregada
-
-```txt
-src
-├── assets
-├── components
-│   └── Sidebar.js
-├── controllers
-│   └── login.controller.js
-├── router
-│   └── router.js
-├── views
-│   ├── loginView.js
-│   ├── homeView.js
-│   └── notFound.js
-├── utils.js
-├── main.js
-└── style.css
-```
-
----
-
-## Explicación de la arquitectura
-
-### Components
-
-Contiene componentes reutilizables de interfaz.
-
-Ejemplo:
-
-```txt
-components/
-└── Sidebar.js
-```
-
-El Sidebar puede reutilizarse en distintas vistas y centraliza la navegación principal del sistema.
-
-### Controllers
-
-Contienen la lógica de negocio y los eventos de la aplicación.
-
-Ejemplo:
-
-```txt
-controllers/
-└── login.controller.js
-```
-
-Responsabilidades:
-
-- Capturar eventos del formulario
-- Validar credenciales
-- Consumir la API
-- Gestionar el inicio de sesión
-- Redireccionar usuarios
-
-### Views
-
-Representan las pantallas de la aplicación.
-
-Actualmente:
-
-- Login
-- Home
-- Not Found (404)
-
-Cada vista retorna una plantilla HTML que es renderizada dinámicamente dentro del contenedor principal.
-
-### Router
-
-Administra la navegación interna de la SPA.
-
-Responsabilidades:
-
-- Renderizar vistas
-- Gestionar rutas
-- Proteger vistas privadas
-- Redireccionar usuarios
-- Mostrar páginas 404
-
-### Utils
-
-Contiene funciones auxiliares reutilizables.
-
-Actualmente:
-
-- Guardar sesión
-- Obtener sesión
-- Eliminar sesión
-- Validar autenticación
-
----
-
-## API simulada
-
-La aplicación utiliza JSON Server para simular una API REST.
-
-Ejemplo de usuario administrador:
-
-```json
-{
-  "id": 1,
-  "email": "admin@test.com",
-  "password": "123456",
-  "role": "admin"
-}
-```
-
-Ejemplo de usuario estándar:
-
-```json
-{
-  "id": 2,
-  "email": "user@test.com",
-  "password": "123456",
-  "role": "user"
-}
-```
-
----
-
-## Configuración del entorno
-
-Instalar dependencias:
-
+### 1. Install Dependencies
+Open your terminal in the project root folder and install the required node modules:
 ```bash
 npm install
 ```
 
-Ejecutar proyecto:
-
+### 2. Run the Project
+This project uses `concurrently` to launch both the frontend client and the mock database server simultaneously with a single command:
 ```bash
 npm run dev
 ```
-
-Este comando levanta simultáneamente:
-
-- Vite
-- JSON Server
-
-gracias al uso de Concurrently.
+>  **Note:** Running `npm run dev` will boot up the Vite development server (usually on port `5173`) and the JSON Server database (on port `3000` or `3001`).
 
 ---
 
-## Scripts sugeridos
+##  Project Structure
 
-```json
-{
-  "scripts": {
-    "client": "vite",
-    "server": "json-server --watch db.json --port 3000",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
-  }
-}
+Here is the file organization of the repository:
+
+```text
+PERFORMANCETESTJS-PDM3-C5/
+├── node_modules/
+├── public/
+│   ├── favicon.svg
+│   └── icons.svg
+├── src/
+│   ├── api/
+│   │   └── http.js                 # Centralized Fetch wrapper (GET, POST, PATCH, DELETE)
+│   ├── assets/
+│   ├── components/
+│   │   ├── ReservationCard.js      # Dynamic HTML template for reservation cards
+│   │   └── Sidebar.js              # Navigation sidebar component
+│   ├── controllers/
+│   │   ├── home.controller.js      # Main logic for reservation handling, approval, and deletion
+│   │   └── login.controller.js     # User authentication handling
+│   ├── router/
+│   │   └── router.js               # Client-side SPA routing logic
+│   ├── services/
+│   │   └── reservation.service.js  # Dedicated API services for reservation endpoints
+│   ├── views/
+│   │   ├── homeView.js             # Main dashboard view shell
+│   │   ├── loginView.js            # Authentication view shell
+│   │   └── notFoundView.js         # 404 Error page view shell
+│   ├── main.js                     # Application entry point
+│   ├── style.css                   # Tailwind and global styles config
+│   └── utils.js                    # Session handling and storage helper functions
+├── db.json                         # Local mock database (Users and Reservations JSON data)
+├── index.html                      # Main HTML entry document
+├── package.json                    # Project metadata, dependencies, and script definitions
+├── README.md                       # Project documentation
+└── vite.config.js                  # Vite bundler configuration
 ```
 
 ---
 
-## Credenciales de prueba
+##  Key Features Built-in
 
-Administrador:
-
-```txt
-admin@test.com
-123456
-```
-
-Usuario:
-
-```txt
-user@test.com
-123456
-```
+* **Role-Based Views**: Standard users can only view, create, and dismiss their own bookings from their panel. Administrators gain full visibility over all system reservations.
+* **Smart CRUD & State Management**: 
+  * New bookings are automatically assigned to the logged-in user ID with a default status of `"Pendiente"`.
+  * Real-time DOM elements are generated on-the-fly preventing `undefined` metadata fields.
+* **Admin Approval Process**: Administrators receive an exclusive green **"Aprobar"** button on pending cards. Clicking it triggers an asynchronous `PATCH` request to update the record to `"Aprobado"` instantly without a full page reload.
+* **Persistent Deletion**: The system uses targeted event listeners linked to unique card `data-id` parameters to execute asynchronous REST `DELETE` operations directly against `db.json`.
 
 ---
 
-## Funcionalidades base incluidas
+## Test Credentials
 
-- Login funcional
-- Consumo de API mediante JSON Server
-- Persistencia de sesión con LocalStorage
-- Logout
-- Router SPA
-- Protección básica de rutas
-- Sidebar reutilizable
-- Página 404 personalizada
-- Configuración de TailwindCSS
-- Configuración de Vite
+You can use the following mock accounts pre-configured in the database to test the distinct workflows:
 
----
+### Administrator Account
+* **Email:** `admin@test.com`
+* **Password:** `123456`
 
-## Módulos pendientes para desarrollar
-
-Los coders deberán implementar:
-
-- CRUD de reservas
-- CRUD de espacios
-- Gestión de roles
-- Guards avanzados
-- Validaciones de permisos
-- Dashboard administrativo
-- Estadísticas
-- Filtros y búsquedas
-- Notificaciones
-- Reglas de negocio
-
----
-
-## Nota para los coders
-
-Aunque esta guía está escrita en español para facilitar la comprensión del proyecto, el archivo README.md entregado como evidencia debe estar redactado completamente en inglés.
+### Standard User Account
+* **Email:** `user@test.com`
+* **Password:** `123456`
